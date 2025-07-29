@@ -25,17 +25,24 @@ export const NewCommentForm: React.FC<Props> = ({ postId, onCommentAdded }) => {
       return;
     }
 
+    let hasError = false;
+
     if (name.trim() === '') {
       setNameError(true);
+      hasError = true;
     }
 
     if (email.trim() === '') {
       setEmailError(true);
+      hasError = true;
     }
 
     if (text.trim() === '') {
       setTextError(true);
+      hasError = true;
+    }
 
+    if (hasError) {
       return;
     }
 
