@@ -1,8 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
 import { PostDetails } from './PostDetails';
+import { Post } from '../types/Post';
 
-export const Sidebar: React.FC = () => {
+type Props = {
+  activePost: Post | null;
+  setErrorMessage: (msg: string) => void;
+};
+
+export const Sidebar: React.FC<Props> = ({activePost, setErrorMessage}) => {
   return (
     <div
       data-cy="Sidebar"
@@ -15,7 +21,7 @@ export const Sidebar: React.FC = () => {
       )}
     >
       <div className="tile is-child box is-success ">
-        <PostDetails />
+        <PostDetails activePost={activePost} setErrorMessage={setErrorMessage} />
       </div>
     </div>
   );

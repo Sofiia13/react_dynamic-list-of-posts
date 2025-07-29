@@ -8,12 +8,14 @@ type Props = {
   selectedUser: User;
   setErrorMessage: (msg: string) => void;
   handleSidebar: () => void;
+  setActivePost: (post: Post) => void;
 };
 
 export const PostsList: React.FC<Props> = ({
   selectedUser,
   setErrorMessage,
   handleSidebar,
+  setActivePost,
 }) => {
   const [userPosts, setUserPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +30,11 @@ export const PostsList: React.FC<Props> = ({
       })
       .finally(() => setIsLoading(false));
   }, [selectedUser, setErrorMessage]);
+
+  const handleOpenSidebar = (post: Post) => {
+    setActivePost(post);
+    handleSidebar();
+  };
 
   return (
     <>
@@ -61,7 +68,7 @@ export const PostsList: React.FC<Props> = ({
                       type="button"
                       data-cy="PostButton"
                       className="button is-link is-light"
-                      onClick={handleSidebar}
+                      onClick={() => handleOpenSidebar(post)}
                     >
                       Open
                     </button>

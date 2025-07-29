@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { User } from './types/User';
 import { getUsers } from './api/users';
 import { Sidebar } from './components/Sidebar';
-// import { Post } from './types/Post';
+import { Post } from './types/Post';
 // import { Loader } from './components/Loader';
 
 export const App = () => {
@@ -17,6 +17,7 @@ export const App = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+  const [activePost, setActivePost] = useState<Post | null>(null);
 
   useEffect(() => {
     getUsers()
@@ -79,11 +80,17 @@ export const App = () => {
                   selectedUser={selectedUser}
                   setErrorMessage={setErrorMessage}
                   handleSidebar={handleSidebar}
+                  setActivePost={setActivePost}
                 />
               )}
             </div>
           </div>
-          {sidebarIsOpen && <Sidebar />}
+          {sidebarIsOpen && (
+            <Sidebar
+              activePost={activePost}
+              setErrorMessage={setErrorMessage}
+            />
+          )}
         </div>
       </div>
       {/* </div> */}
