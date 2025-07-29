@@ -37,6 +37,16 @@ export const PostDetails: React.FC<Props> = ({
     setIsFormOpen(prev => !prev);
   };
 
+  const handleCommentAdded = () => {
+    if (!activePost) return;
+
+    getComments(activePost.id)
+      .then(setPostComments)
+      .catch(() => {
+        setErrorMessage('Unable to load comments');
+      });
+  };
+
   return (
     <div className="content" data-cy="PostDetails">
       <div className="content" data-cy="PostDetails">
@@ -97,7 +107,10 @@ export const PostDetails: React.FC<Props> = ({
         </div>
 
         {activePost && isFormOpen ? (
-          <NewCommentForm postId={activePost.id} />
+          <NewCommentForm
+            postId={activePost.id}
+            onCommentAdded={handleCommentAdded}
+          />
         ) : (
           <button
             data-cy="WriteCommentButton"

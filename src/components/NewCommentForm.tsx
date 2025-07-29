@@ -3,9 +3,10 @@ import { addComment } from '../api/comments';
 
 type Props = {
   postId: number;
+  onCommentAdded: () => void;
 };
 
-export const NewCommentForm: React.FC<Props> = ({ postId }) => {
+export const NewCommentForm: React.FC<Props> = ({ postId, onCommentAdded }) => {
   const [name, setName] = useState('');
   const [nameError, setNameError] = useState(false);
 
@@ -52,6 +53,8 @@ export const NewCommentForm: React.FC<Props> = ({ postId }) => {
         setNameError(false);
         setEmailError(false);
         setTextError(false);
+
+        onCommentAdded();
       })
       .finally(() => {
         setIsSending(false);
