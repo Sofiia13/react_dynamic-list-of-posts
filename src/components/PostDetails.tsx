@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NewCommentForm } from './NewCommentForm';
 import { Post } from '../types/Post';
-import { getComments } from '../api/posts';
+import { getComments } from '../api/comments';
 import { Comment } from '../types/Comment';
 import { Loader } from './Loader';
 
@@ -16,6 +16,7 @@ export const PostDetails: React.FC<Props> = ({
 }) => {
   const [postComments, setPostComments] = useState<Comment[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   useEffect(() => {
     if (!activePost) {
@@ -31,6 +32,10 @@ export const PostDetails: React.FC<Props> = ({
       })
       .finally(() => setIsLoading(false));
   }, [activePost, setErrorMessage]);
+
+  const handleFormOpen = () => {
+    setIsFormOpen(prev => !prev);
+  };
 
   return (
     <div className="content" data-cy="PostDetails">
@@ -89,58 +94,20 @@ export const PostDetails: React.FC<Props> = ({
               ))}
             </>
           )}
+        </div>
 
-          {/* <article className="message is-small" data-cy="Comment">
-            <div className="message-header">
-              <a href="mailto:misha@mate.academy" data-cy="CommentAuthor">
-                Misha Hrynko
-              </a>
-
-              <button
-                data-cy="CommentDelete"
-                type="button"
-                className="delete is-small"
-                aria-label="delete"
-              >
-                delete button
-              </button>
-            </div>
-            <div className="message-body" data-cy="CommentBody">
-              One more comment
-            </div>
-          </article> */}
-
-          {/* <article className="message is-small" data-cy="Comment">
-            <div className="message-header">
-              <a href="mailto:misha@mate.academy" data-cy="CommentAuthor">
-                Misha Hrynko
-              </a>
-
-              <button
-                data-cy="CommentDelete"
-                type="button"
-                className="delete is-small"
-                aria-label="delete"
-              >
-                delete button
-              </button>
-            </div>
-
-            <div className="message-body" data-cy="CommentBody">
-              {'Multi\nline\ncomment'}
-            </div>
-          </article> */}
-
+        {activePost && isFormOpen ? (
+          <NewCommentForm postId={activePost.id} />
+        ) : (
           <button
             data-cy="WriteCommentButton"
             type="button"
             className="button is-link"
+            onClick={handleFormOpen}
           >
             Write a comment
           </button>
-        </div>
-
-        <NewCommentForm />
+        )}
       </div>
     </div>
   );

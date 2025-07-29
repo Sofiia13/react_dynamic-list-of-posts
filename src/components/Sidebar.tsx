@@ -8,7 +8,7 @@ type Props = {
   setErrorMessage: (msg: string) => void;
 };
 
-export const Sidebar: React.FC<Props> = ({activePost, setErrorMessage}) => {
+export const Sidebar: React.FC<Props> = ({ activePost, setErrorMessage }) => {
   return (
     <div
       data-cy="Sidebar"
@@ -21,7 +21,10 @@ export const Sidebar: React.FC<Props> = ({activePost, setErrorMessage}) => {
       )}
     >
       <div className="tile is-child box is-success ">
-        <PostDetails activePost={activePost} setErrorMessage={setErrorMessage} />
+        <PostDetails
+          activePost={activePost}
+          setErrorMessage={setErrorMessage}
+        />
       </div>
     </div>
   );
