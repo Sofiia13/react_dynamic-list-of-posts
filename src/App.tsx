@@ -1,5 +1,3 @@
-// import classNames from 'classnames';
-
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './App.scss';
@@ -10,6 +8,7 @@ import { UserSelector } from './components/UserSelector';
 import { useEffect, useState } from 'react';
 import { User } from './types/User';
 import { getUsers } from './api/users';
+import { Sidebar } from './components/Sidebar';
 // import { Post } from './types/Post';
 // import { Loader } from './components/Loader';
 
@@ -17,6 +16,7 @@ export const App = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
   useEffect(() => {
     getUsers()
@@ -25,6 +25,10 @@ export const App = () => {
         setErrorMessage('Unable to load users');
       });
   }, []);
+
+  const handleSidebar = () => {
+    setSidebarIsOpen(prev => !prev);
+  };
 
   return (
     <main className="section">
@@ -74,26 +78,13 @@ export const App = () => {
                 <PostsList
                   selectedUser={selectedUser}
                   setErrorMessage={setErrorMessage}
+                  handleSidebar={handleSidebar}
                 />
               )}
             </div>
           </div>
+          {sidebarIsOpen && <Sidebar />}
         </div>
-
-        {/* <div
-          data-cy="Sidebar"
-          className={classNames(
-            'tile',
-            'is-parent',
-            'is-8-desktop',
-            'Sidebar',
-            'Sidebar--open',
-          )}
-        >
-          <div className="tile is-child box is-success ">
-            <PostDetails />
-          </div>
-        </div> */}
       </div>
       {/* </div> */}
     </main>

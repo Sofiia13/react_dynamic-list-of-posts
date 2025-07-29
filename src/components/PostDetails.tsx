@@ -2,7 +2,9 @@ import React from 'react';
 import { Loader } from './Loader';
 import { NewCommentForm } from './NewCommentForm';
 
-export const PostDetails: React.FC = () => {
+type Props = {};
+
+export const PostDetails: React.FC<Props> = () => {
   return (
     <div className="content" data-cy="PostDetails">
       <div className="content" data-cy="PostDetails">

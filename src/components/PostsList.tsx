@@ -7,11 +7,13 @@ import { Loader } from './Loader';
 type Props = {
   selectedUser: User;
   setErrorMessage: (msg: string) => void;
+  handleSidebar: () => void;
 };
 
 export const PostsList: React.FC<Props> = ({
   selectedUser,
   setErrorMessage,
+  handleSidebar,
 }) => {
   const [userPosts, setUserPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,6 +61,7 @@ export const PostsList: React.FC<Props> = ({
                       type="button"
                       data-cy="PostButton"
                       className="button is-link is-light"
+                      onClick={handleSidebar}
                     >
                       Open
                     </button>
