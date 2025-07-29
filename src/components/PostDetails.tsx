@@ -7,16 +7,13 @@ import { Loader } from './Loader';
 
 type Props = {
   activePost: Post | null;
-  setErrorMessage: (msg: string) => void;
 };
 
-export const PostDetails: React.FC<Props> = ({
-  activePost,
-  setErrorMessage,
-}) => {
+export const PostDetails: React.FC<Props> = ({ activePost }) => {
   const [postComments, setPostComments] = useState<Comment[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (!activePost) {
@@ -87,6 +84,10 @@ export const PostDetails: React.FC<Props> = ({
 
           {isLoading ? (
             <Loader />
+          ) : errorMessage ? (
+            <div className="notification is-danger" data-cy="CommentsError">
+              Something went wrong
+            </div>
           ) : postComments.length === 0 ? (
             <p className="title is-4" data-cy="NoCommentsMessage">
               No comments yet
@@ -124,13 +125,7 @@ export const PostDetails: React.FC<Props> = ({
             </>
           )}
         </div>
-
-        {activePost && isFormOpen ? (
-          <NewCommentForm
-            postId={activePost.id}
-            onCommentAdded={handleCommentAdded}
-          />
-        ) : (
+        {activePost && !isLoading && !errorMessage && !isFormOpen && (
           <button
             data-cy="WriteCommentButton"
             type="button"
@@ -139,6 +134,13 @@ export const PostDetails: React.FC<Props> = ({
           >
             Write a comment
           </button>
+        )}
+
+        {activePost && isFormOpen && (
+          <NewCommentForm
+            postId={activePost.id}
+            onCommentAdded={handleCommentAdded}
+          />
         )}
       </div>
     </div>

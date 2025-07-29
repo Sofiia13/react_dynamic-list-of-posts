@@ -3,14 +3,12 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import './App.scss';
 
 import { PostsList } from './components/PostsList';
-// import { PostDetails } from './components/PostDetails';
 import { UserSelector } from './components/UserSelector';
 import { useEffect, useState } from 'react';
 import { User } from './types/User';
 import { getUsers } from './api/users';
 import { Sidebar } from './components/Sidebar';
 import { Post } from './types/Post';
-// import { Loader } from './components/Loader';
 
 export const App = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -28,14 +26,14 @@ export const App = () => {
   }, []);
 
   const handleSidebar = (post: Post | null) => {
-  if (post && post.id === activePost?.id) {
-    setActivePost(null);
-    setSidebarIsOpen(false);
-  } else {
-    setActivePost(post);
-    setSidebarIsOpen(true);
-  }
-};
+    if (post && post.id === activePost?.id) {
+      setActivePost(null);
+      setSidebarIsOpen(false);
+    } else {
+      setActivePost(post);
+      setSidebarIsOpen(true);
+    }
+  };
 
   return (
     <main className="section">
@@ -62,7 +60,7 @@ export const App = () => {
                     className="notification is-danger"
                     data-cy="PostsLoadingError"
                   >
-                    {errorMessage}
+                    Something went wrong
                   </div>
                 ) : (
                   ''
@@ -85,7 +83,7 @@ export const App = () => {
                 <PostsList
                   selectedUser={selectedUser}
                   setErrorMessage={setErrorMessage}
-                  handleSidebar={handleSidebar} 
+                  handleSidebar={handleSidebar}
                   activePost={activePost}
                 />
               )}
@@ -94,7 +92,6 @@ export const App = () => {
           {sidebarIsOpen && (
             <Sidebar
               activePost={activePost}
-              setErrorMessage={setErrorMessage}
             />
           )}
         </div>

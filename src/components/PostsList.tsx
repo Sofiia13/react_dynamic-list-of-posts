@@ -21,6 +21,10 @@ export const PostsList: React.FC<Props> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (!selectedUser) {
+      setUserPosts([]); 
+      return;
+    }
     setIsLoading(true);
 
     getPosts(selectedUser.id)
