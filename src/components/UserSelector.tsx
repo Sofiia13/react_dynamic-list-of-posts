@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { User } from '../types/User';
 
 type Props = {
@@ -13,6 +13,7 @@ export const UserSelector: React.FC<Props> = ({
   selectedUser,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => {
     setIsOpen(prev => !prev);
@@ -23,10 +24,27 @@ export const UserSelector: React.FC<Props> = ({
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div
       data-cy="UserSelector"
       className={`dropdown ${isOpen ? 'is-active' : ''} `}
+      ref={dropdownRef}
     >
       <div className="dropdown-trigger">
         <button
@@ -49,7 +67,7 @@ export const UserSelector: React.FC<Props> = ({
           {users?.map(user => (
             <a
               href={`#user-${user.id}`}
-              className="dropdown-item"
+              className={`dropdown-item ${user.id === selectedUser?.id ? 'is-active' : ''}`}
               key={user.id}
               onClick={e => {
                 e.preventDefault();

@@ -66,7 +66,7 @@ export const App = () => {
                   ''
                 )}
               </div>
-              
+
               {selectedUser && (
                 <PostsList
                   selectedUser={selectedUser}
