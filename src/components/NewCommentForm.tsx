@@ -26,16 +26,15 @@ export const NewCommentForm: React.FC<Props> = ({ postId }) => {
 
     if (name.trim() === '') {
       setNameError(true);
-      return;
     }
 
     if (email.trim() === '') {
       setEmailError(true);
-      return;
     }
 
     if (text.trim() === '') {
       setTextError(true);
+
       return;
     }
 
@@ -57,6 +56,16 @@ export const NewCommentForm: React.FC<Props> = ({ postId }) => {
       .finally(() => {
         setIsSending(false);
       });
+  };
+
+  const handleClear = () => {
+    setName('');
+    setEmail('');
+    setText('');
+
+    setNameError(false);
+    setEmailError(false);
+    setTextError(false);
   };
 
   return (
@@ -177,7 +186,11 @@ export const NewCommentForm: React.FC<Props> = ({ postId }) => {
 
         <div className="control">
           {/* eslint-disable-next-line react/button-has-type */}
-          <button type="reset" className="button is-link is-light">
+          <button
+            type="reset"
+            className="button is-link is-light"
+            onClick={handleClear}
+          >
             Clear
           </button>
         </div>
