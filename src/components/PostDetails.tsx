@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NewCommentForm } from './NewCommentForm';
 import { Post } from '../types/Post';
-import { getComments } from '../api/comments';
+import { deleteComment, getComments } from '../api/comments';
 import { Comment } from '../types/Comment';
 import { Loader } from './Loader';
 
@@ -38,13 +38,31 @@ export const PostDetails: React.FC<Props> = ({
   };
 
   const handleCommentAdded = () => {
-    if (!activePost) return;
+    if (!activePost) {
+      return;
+    }
 
     getComments(activePost.id)
       .then(setPostComments)
       .catch(() => {
         setErrorMessage('Unable to load comments');
       });
+  };
+
+  const handleDeleteComment = (commentId: number) => {
+    const commentToDelete = postComments.find(
+      comment => comment.id === commentId,
+    );
+
+    setPostComments(prev => prev.filter(comment => comment.id !== commentId));
+
+    deleteComment(commentId).catch(() => {
+      setErrorMessage('Unable to delete comment');
+
+      if (commentToDelete) {
+        setPostComments(prev => [...prev, commentToDelete]);
+      }
+    });
   };
 
   return (
@@ -92,6 +110,7 @@ export const PostDetails: React.FC<Props> = ({
                       type="button"
                       className="delete is-small"
                       aria-label="delete"
+                      onClick={() => handleDeleteComment(comment.id)}
                     >
                       delete button
                     </button>

@@ -27,9 +27,15 @@ export const App = () => {
       });
   }, []);
 
-  const handleSidebar = () => {
-    setSidebarIsOpen(prev => !prev);
-  };
+  const handleSidebar = (post: Post | null) => {
+  if (post && post.id === activePost?.id) {
+    setActivePost(null);
+    setSidebarIsOpen(false);
+  } else {
+    setActivePost(post);
+    setSidebarIsOpen(true);
+  }
+};
 
   return (
     <main className="section">
@@ -79,8 +85,8 @@ export const App = () => {
                 <PostsList
                   selectedUser={selectedUser}
                   setErrorMessage={setErrorMessage}
-                  handleSidebar={handleSidebar}
-                  setActivePost={setActivePost}
+                  handleSidebar={handleSidebar} 
+                  activePost={activePost}
                 />
               )}
             </div>
