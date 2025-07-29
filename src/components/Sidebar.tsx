@@ -7,9 +7,7 @@ type Props = {
   activePost: Post | null;
 };
 
-export const Sidebar: React.FC<Props> = ({
-  activePost,
-}) => {
+export const Sidebar: React.FC<Props> = ({ activePost }) => {
   return (
     <div
       data-cy="Sidebar"
@@ -22,9 +20,7 @@ export const Sidebar: React.FC<Props> = ({
       )}
     >
       <div className="tile is-child box is-success ">
-        <PostDetails
-          activePost={activePost}
-        />
+        <PostDetails activePost={activePost} />
       </div>
     </div>
   );

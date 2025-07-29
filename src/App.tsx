@@ -66,19 +66,7 @@ export const App = () => {
                   ''
                 )}
               </div>
-              {/* //{' '}
-              <div className="block" data-cy="MainContent">
-                // <p data-cy="NoSelectedUser">No user selected</p> */}
-              {/* <div
-                className="notification is-danger"
-                data-cy="PostsLoadingError"
-              >
-                Something went wrong!
-              </div>
-
-              <div className="notification is-warning" data-cy="NoPostsYet">
-                No posts yet
-              </div> */}
+              
               {selectedUser && (
                 <PostsList
                   selectedUser={selectedUser}
@@ -89,14 +77,9 @@ export const App = () => {
               )}
             </div>
           </div>
-          {sidebarIsOpen && (
-            <Sidebar
-              activePost={activePost}
-            />
-          )}
+          {sidebarIsOpen && <Sidebar activePost={activePost} />}
         </div>
       </div>
-      {/* </div> */}
     </main>
   );
 };
