@@ -4,12 +4,13 @@ import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './App.scss';
 
-// import { PostsList } from './components/PostsList';
+import { PostsList } from './components/PostsList';
 // import { PostDetails } from './components/PostDetails';
 import { UserSelector } from './components/UserSelector';
 import { useEffect, useState } from 'react';
 import { User } from './types/User';
 import { getUsers } from './api/users';
+// import { Post } from './types/Post';
 // import { Loader } from './components/Loader';
 
 export const App = () => {
@@ -59,7 +60,6 @@ export const App = () => {
               {/* //{' '}
               <div className="block" data-cy="MainContent">
                 // <p data-cy="NoSelectedUser">No user selected</p> */}
-              {/* <Loader /> */}
               {/* <div
                 className="notification is-danger"
                 data-cy="PostsLoadingError"
@@ -70,7 +70,12 @@ export const App = () => {
               <div className="notification is-warning" data-cy="NoPostsYet">
                 No posts yet
               </div> */}
-              {/* <PostsList />/ */}
+              {selectedUser && (
+                <PostsList
+                  selectedUser={selectedUser}
+                  setErrorMessage={setErrorMessage}
+                />
+              )}
             </div>
           </div>
         </div>
